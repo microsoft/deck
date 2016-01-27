@@ -18,66 +18,32 @@ module.exports = angular.module('spinnaker.azure.serverGroupCommandBuilder.servi
 
     function buildNewServerGroupCommand (application, defaults) {
       defaults = defaults || {};
-      var regionsKeyedByAccountLoader = accountService.getRegionsKeyedByAccount('azure');
 
       var defaultCredentials = defaults.account || application.defaultCredentials || settings.providers.azure.defaults.account;
       var defaultRegion = defaults.region || application.defaultRegion || settings.providers.azure.defaults.region;
 
-      var preferredZonesLoader = accountService.getAvailabilityZonesForAccountAndRegion('azure', defaultCredentials, defaultRegion);
-
-      var clusterDiffLoader = function() { return []; };
-      if (application.name) {
-        clusterDiffLoader = diffService.getClusterDiffForAccount(defaultCredentials, application.name);
-      }
-
-      return $q.all({
-        preferredZones: preferredZonesLoader,
-        regionsKeyedByAccount: regionsKeyedByAccountLoader,
-        clusterDiff: clusterDiffLoader,
-      })
-        .then(function (asyncData) {
-          var availabilityZones = asyncData.preferredZones;
-
-          var regions = asyncData.regionsKeyedByAccount[defaultCredentials];
-          var keyPair = regions ? regions.defaultKeyPair : null;
-
-          return {
-            application: application.name,
-            credentials: defaultCredentials,
-            region: defaultRegion,
-            strategy: '',
-            capacity: {
-              min: 1,
-              max: 1,
-              desired: 1
-            },
-            targetHealthyDeployPercentage: 100,
-            cooldown: 10,
-            healthCheckType: 'EC2',
-            healthCheckGracePeriod: 600,
-            instanceMonitoring: false,
-            ebsOptimized: false,
-            selectedProvider: 'azure',
-            iamRole: 'BaseIAMRole', // TODO: should not be hard coded here
-
-            terminationPolicies: ['Default'],
-            vpcId: null,
-            availabilityZones: availabilityZones,
-            keyPair: keyPair,
-            suspendedProcesses: [],
-            securityGroups: [],
-            viewState: {
-              instanceProfile: 'custom',
-              allImageSelection: null,
-              useAllImageSelection: false,
-              useSimpleCapacity: true,
-              usePreferredZones: true,
-              mode: defaults.mode || 'create',
-              disableStrategySelection: true,
-              clusterDiff: asyncData.clusterDiff,
-            },
-          };
-        });
+      return {
+        application: application.name,
+        credentials: defaultCredentials,
+        region: defaultRegion,
+        strategy: '',
+        capacity: {
+          min: 1,
+          max: 1,
+          desired: 1
+        },
+        selectedProvider: 'azure',
+        securityGroups: [],
+        viewState: {
+          instanceProfile: 'custom',
+          allImageSelection: null,
+          useAllImageSelection: false,
+          useSimpleCapacity: true,
+          usePreferredZones: true,
+          mode: defaults.mode || 'create',
+          disableStrategySelection: true,
+        },
+      };
     }
 
     function buildServerGroupCommandFromPipeline(application, originalCluster) {
