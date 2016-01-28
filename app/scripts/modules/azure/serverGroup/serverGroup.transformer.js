@@ -3,9 +3,8 @@
 let angular = require('angular');
 
 module.exports = angular.module('spinnaker.azure.serverGroup.transformer', [
-    require('../../core/utils/lodash.js'),
   ])
-  .factory('azureServerGroupTransformer', function (_) {
+  .factory('azureServerGroupTransformer', function () {
 
     function convertServerGroupCommandToDeployConfiguration(base) {
       var command = {

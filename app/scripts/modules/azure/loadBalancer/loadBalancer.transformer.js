@@ -3,48 +3,8 @@
 let angular = require('angular');
 
 module.exports = angular.module('spinnaker.azure.loadBalancer.transformer', [
-  require('../../core/utils/lodash.js'),
 ])
-  .factory('azureLoadBalancerTransformer', function (settings, _) {
-
-    function updateHealthCounts(container) {
-      var instances = container.instances;
-      var serverGroups = container.serverGroups || [container];
-      container.instanceCounts = {
-        up: instances.filter(function (instance) {
-          return instance.health[0].state === 'InService';
-        }).length,
-        down: instances.filter(function (instance) {
-          return instance.health[0].state === 'OutOfService';
-        }).length,
-        outOfService: serverGroups.reduce(function (acc, serverGroup) {
-          return serverGroup.instances.filter(function (instance) {
-            return instance.healthState === 'OutOfService';
-          }).length + acc;
-        }, 0),
-      };
-    }
-
-    function transformInstance(instance, loadBalancer) {
-      instance.health = instance.health || {};
-      instance.provider = loadBalancer.type;
-      instance.account = loadBalancer.account;
-      instance.region = loadBalancer.region;
-      instance.health.type = 'LoadBalancer';
-      instance.healthState = instance.health.state ? instance.health.state === 'InService' ? 'Up' : 'Down' : 'OutOfService';
-      instance.health = [instance.health];
-      instance.loadBalancers = [loadBalancer.name];
-    }
-
-    function addVpcNameToLoadBalancer(loadBalancer) {
-      return function(vpcs) {
-        var matches = vpcs.filter(function(test) {
-          return test.id === loadBalancer.vpcId;
-        });
-        loadBalancer.vpcName = matches.length ? matches[0].name : '';
-        return loadBalancer;
-      };
-    }
+  .factory('azureLoadBalancerTransformer', function (settings) {
 
     function serverGroupIsInLoadBalancer(serverGroup, loadBalancer) {
       return serverGroup.type === 'azure' &&

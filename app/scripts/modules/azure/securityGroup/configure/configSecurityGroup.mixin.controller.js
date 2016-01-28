@@ -112,7 +112,6 @@ module.exports = angular
     //};
 
     ctrl.regionUpdated = function() {
-      var account = $scope.securityGroup.credentials || $scope.securityGroup.accountName;
     };
 
     this.vpcUpdated = function() {

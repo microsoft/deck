@@ -4,7 +4,7 @@ let angular = require('angular');
 
 module.exports = angular.module('spinnaker.azure.serverGroupCommandBuilder.service', [
 ])
-  .factory('azureServerGroupCommandBuilder', function (settings, $exceptionHandler) {
+  .factory('azureServerGroupCommandBuilder', function (settings) {
 
     function buildNewServerGroupCommand (application, defaults) {
       defaults = defaults || {};
