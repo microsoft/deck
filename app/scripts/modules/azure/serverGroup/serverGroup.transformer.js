@@ -4,27 +4,10 @@ let angular = require('angular');
 
 module.exports = angular.module('spinnaker.azure.serverGroup.transformer', [
     require('../../core/utils/lodash.js'),
-    require('../vpc/vpc.read.service.js'),
   ])
-  .factory('azureServerGroupTransformer', function (_, azureVpcReader) {
-
-    function normalizeServerGroup(serverGroup) {
-      serverGroup.instances.forEach((instance) => { instance.vpcId = serverGroup.vpcId; });
-      return azureVpcReader.listVpcs().then(addVpcNameToServerGroup(serverGroup));
-    }
-
-    function addVpcNameToServerGroup(serverGroup) {
-      return function(vpcs) {
-        var matches = vpcs.filter(function(test) {
-          return test.id === serverGroup.vpcId;
-        });
-        serverGroup.vpcName = matches.length ? matches[0].name : '';
-        return serverGroup;
-      };
-    }
+  .factory('azureServerGroupTransformer', function (_) {
 
     function convertServerGroupCommandToDeployConfiguration(base) {
-      // use _.defaults to avoid copying the backingData, which is huge and expensive to copy over
       var command = {
         name: base.application,
         cloudProvider: base.selectedProvider,
@@ -68,7 +51,6 @@ module.exports = angular.module('spinnaker.azure.serverGroup.transformer', [
 
     return {
       convertServerGroupCommandToDeployConfiguration: convertServerGroupCommandToDeployConfiguration,
-      normalizeServerGroup: normalizeServerGroup,
     };
 
   });

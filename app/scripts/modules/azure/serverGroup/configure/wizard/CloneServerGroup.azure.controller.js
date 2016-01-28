@@ -16,7 +16,7 @@ module.exports = angular.module('spinnaker.azure.cloneServerGroup.controller', [
     $scope.pages = {
       templateSelection: require('./templateSelection.html'),
       basicSettings: require('./basicSettings.html'),
-/*      loadBalancers: require('./loadBalancers.html'),
+/*    loadBalancers: require('./loadBalancers.html'),
       securityGroups: require('./securityGroups.html'),
       instanceArchetype: require('./instanceArchetype.html'),
       instanceType: require('./instanceType.html'),
