@@ -35,7 +35,7 @@ module.exports = angular.module('spinnaker.azure.serverGroup.transformer', [
         region: base.region,
         user: '[anonymous]',
         upgradePolicy: 'Manual',
-        'type': 'createServerGroup',
+        type: 'createServerGroup',
 
         image: {
           publisher: 'Canonical',
