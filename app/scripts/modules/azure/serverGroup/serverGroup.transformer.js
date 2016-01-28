@@ -35,6 +35,7 @@ module.exports = angular.module('spinnaker.azure.serverGroup.transformer', [
         region: base.region,
         user: '[anonymous]',
         upgradePolicy: 'Manual',
+        'type': 'createServerGroup',
 
         image: {
           publisher: 'Canonical',
@@ -52,10 +53,6 @@ module.exports = angular.module('spinnaker.azure.serverGroup.transformer', [
         osConfig: {
           adminUsername: 'spinnakeruser',
           adminPassword: '!Qnti**234',
-        },
-
-        stageDetals: {
-          'type': 'createServerGroup',
         },
       };
 
