@@ -28,7 +28,7 @@ module.exports = angular.module('spinnaker.azure.serverGroup.transformer', [
       var command = {
         name: base.application,
         cloudProvider: base.selectedProvider,
-        appName: base.application,
+        application: base.application,
         stack: base.stack,
         detail: base.details,
         credentials: base.credentials,
