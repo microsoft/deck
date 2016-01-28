@@ -3,18 +3,8 @@
 let angular = require('angular');
 
 module.exports = angular.module('spinnaker.azure.serverGroupCommandBuilder.service', [
-  require('exports?"restangular"!imports?_=lodash!restangular'),
-  require('../../../core/account/account.service.js'),
-  require('../../../netflix/serverGroup/diff/diff.service.js'),
-  require('../../subnet/subnet.read.service.js'),
-  require('../../../core/instance/instanceTypeService.js'),
-  require('../../../core/naming/naming.service.js'),
-  require('./serverGroupConfiguration.service.js'),
-  require('../../../core/utils/lodash.js'),
 ])
-  .factory('azureServerGroupCommandBuilder', function (settings, Restangular, $exceptionHandler, $q, diffService,
-                                                     accountService, subnetReader, namingService, instanceTypeService,
-                                                     azureServerGroupConfigurationService, _) {
+  .factory('azureServerGroupCommandBuilder', function (settings, $exceptionHandler) {
 
     function buildNewServerGroupCommand (application, defaults) {
       defaults = defaults || {};
