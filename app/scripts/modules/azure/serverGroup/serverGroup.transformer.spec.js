@@ -2,7 +2,7 @@
 
 describe('azureServerGroupTransformer', function () {
 
-  var transformer, azureVpcReader, $q, $scope;
+  var transformer, $q, $scope;
 
   beforeEach(
     window.module(

@@ -3,12 +3,11 @@
 let angular = require('angular');
 
 module.exports = angular.module('spinnaker.azure.securityGroup.transformer', [
-  require('../vpc/vpc.read.service.js'),
 ])
-  .factory('azureSecurityGroupTransformer', function (vpcReader) {
+  .factory('azureSecurityGroupTransformer', function () {
 
     function normalizeSecurityGroup(securityGroup) {
-      return vpcReader.listVpcs().then(addVpcNameToSecurityGroup(securityGroup));
+      
     }
 
     function addVpcNameToSecurityGroup(securityGroup) {
