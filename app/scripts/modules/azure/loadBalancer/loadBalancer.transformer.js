@@ -6,6 +6,28 @@ module.exports = angular.module('spinnaker.azure.loadBalancer.transformer', [
 ])
   .factory('azureLoadBalancerTransformer', function (settings) {
 
+    function normalizeLoadBalancer(loadBalancer) {
+      loadBalancer.serverGroups.forEach(function(serverGroup) {
+      serverGroup.account = loadBalancer.account;
+      serverGroup.region = loadBalancer.region;
+
+      if (serverGroup.detachedInstances) {
+        serverGroup.detachedInstances = serverGroup.detachedInstances.map(function(instanceId) {
+          return { id: instanceId };
+        });
+        serverGroup.instances = serverGroup.instances.concat(serverGroup.detachedInstances);
+      } else {
+        serverGroup.detachedInstances = [];
+      }
+
+      });
+      var activeServerGroups = _.filter(loadBalancer.serverGroups, {isDisabled: false});
+      loadBalancer.provider = loadBalancer.type;
+      loadBalancer.instances = _(activeServerGroups).pluck('instances').flatten().valueOf();
+      loadBalancer.detachedInstances = _(activeServerGroups).pluck('detachedInstances').flatten().valueOf();
+      return loadBalancer;
+    }
+
     function serverGroupIsInLoadBalancer(serverGroup, loadBalancer) {
       return serverGroup.type === 'azure' &&
         serverGroup.account === loadBalancer.account &&
@@ -77,6 +99,7 @@ module.exports = angular.module('spinnaker.azure.loadBalancer.transformer', [
     }
 
     return {
+      normalizeLoadBalancer: normalizeLoadBalancer,
       serverGroupIsInLoadBalancer: serverGroupIsInLoadBalancer,
       convertLoadBalancerForEditing: convertLoadBalancerForEditing,
       constructNewLoadBalancerTemplate: constructNewLoadBalancerTemplate,
