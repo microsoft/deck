@@ -93,6 +93,7 @@ module.exports = angular.module('spinnaker.azure.securityGroup.azure.details.con
       };
 
       var submitMethod = function () {
+        $scope.securityGroup.type = 'deleteSecurityGroup';
         return azureSecurityGroupWriter.deleteSecurityGroup(securityGroup, application, {
           cloudProvider: 'azure',
           vpcId: $scope.securityGroup.vpcId,
