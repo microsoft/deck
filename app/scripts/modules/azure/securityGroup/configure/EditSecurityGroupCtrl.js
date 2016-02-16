@@ -19,7 +19,7 @@ module.exports = angular.module('spinnaker.azure.securityGroup.azure.edit.contro
       ingress: require('./createSecurityGroupIngress.html'),
     };
 
-    securityGroup.securityRules = _.map(securityGroup.securityRules,function(rule){
+    securityGroup.securityRules = _.map(securityGroup.securityRules,function(rule) {
       var temp = rule.destinationPortRange.split('-');
       rule.startPort = Number(temp[0]);
       rule.endPort = Number(temp[1]);
@@ -36,42 +36,8 @@ module.exports = angular.module('spinnaker.azure.securityGroup.azure.edit.contro
       application: application,
       title: 'Updating your security group',
       modalInstance: $modalInstance,
-      onTaskComplete: application.refreshImmediately,
+      onTaskComplete: onTaskComplete,
     });
-
-
-
-//     securityGroup.securityGroupIngress = _(securityGroup.inboundRules)
-//       .filter(function(rule) {
-//         return rule.securityGroup;
-//       }).map(function(rule) {
-//         return rule.portRanges.map(function(portRange) {
-//           return {
-//             name: rule.securityGroup.name,
-//             type: rule.protocol,
-//             startPort: portRange.startPort,
-//             endPort: portRange.endPort
-//           };
-//         });
-//       })
-//       .flatten()
-//       .value();
-
-//     securityGroup.ipIngress = _(securityGroup.inboundRules)
-//       .filter(function(rule) {
-//         return rule.range;
-//       }).map(function(rule) {
-//         return rule.portRanges.map(function(portRange) {
-//           return {
-//             cidr: rule.range.ip + rule.range.cidr,
-//             type: rule.protocol,
-//             startPort: portRange.startPort,
-//             endPort: portRange.endPort
-//           };
-//         });
-//       })
-//       .flatten()
-//       .value();
 
     this.getSecurityGroupRefreshTime = function() {
       return infrastructureCaches.securityGroups.getStats().ageMax;
@@ -86,13 +52,10 @@ module.exports = angular.module('spinnaker.azure.securityGroup.azure.edit.contro
       });
     };
 
-
-
     function initializeSecurityGroups() {
       return securityGroupReader.getAllSecurityGroups().then(function (securityGroups) {
         var account = securityGroup.accountName,
           region = securityGroup.region,
-          //vpcId = securityGroup.vpcId || null, /*removing vpc support from security group creation for Azure*/
           availableGroups = _.filter(securityGroups[account].azure[region], { /*vpcId: vpcId*/ });
         $scope.availableSecurityGroups = _.pluck(availableGroups, 'name');
       });
@@ -101,7 +64,7 @@ module.exports = angular.module('spinnaker.azure.securityGroup.azure.edit.contro
     this.addRule = function(ruleset) {
       ruleset.push({
         name: $scope.securityGroup.name + '-Rule' + ruleset.length,
-        priority: ruleset.length == 0 ? 100 : 100 * (ruleset.length + 1),
+        priority: ruleset.length === 0 ? 100 : 100 * (ruleset.length + 1),
         protocol: 'tcp',
         access: 'Allow',
         direction: 'InBound',
@@ -114,6 +77,30 @@ module.exports = angular.module('spinnaker.azure.securityGroup.azure.edit.contro
       });
     };
 
+    function onApplicationRefresh() {
+      // If the user has already closed the modal, do not navigate to the new details view
+      if ($scope.$$destroyed) {
+        return;
+      }
+      $modalInstance.close();
+      var newStateParams = {
+        name: $scope.securityGroup.name,
+        accountId: $scope.securityGroup.credentials || $scope.securityGroup.accountName,
+        region: $scope.securityGroup.region,
+        provider: 'azure',
+      };
+      if (!$state.includes('**.securityGroupDetails')) {
+        $state.go('.securityGroupDetails', newStateParams);
+      } else {
+        $state.go('^.securityGroupDetails', newStateParams);
+      }
+    }
+
+    function onTaskComplete() {
+      application.refreshImmediately();
+      application.registerOneTimeRefreshHandler(onApplicationRefresh);
+    }
+
     this.portUpdated = function(ruleset, index)
     {
         ruleset[index].destinationPortRange =
@@ -125,18 +112,17 @@ module.exports = angular.module('spinnaker.azure.securityGroup.azure.edit.contro
     };
 
     this.moveUp = function(ruleset, index) {
-      if(index == 0)
+      if(index === 0)
         return;
       swapRules(ruleset, index, index - 1);
     };
     this.moveDown = function(ruleset, index) {
-      if(index == ruleset.length - 1)
+      if(index === ruleset.length - 1)
         return;
       swapRules(ruleset, index, index + 1);
     };
 
-    function swapRules(ruleset, a, b)
-    {
+    function swapRules(ruleset, a, b) {
       var temp, priorityA, priorityB;
       temp = ruleset[b];
       priorityA = ruleset[a].priority;
@@ -148,8 +134,6 @@ module.exports = angular.module('spinnaker.azure.securityGroup.azure.edit.contro
       ruleset[a].priority = priorityA;
       ruleset[b].priority = priorityB;
     }
-
-    //$scope.securityGroup.securityRules = [];
 
     $scope.taskMonitor.onApplicationRefresh = $modalInstance.dismiss;
 
@@ -174,6 +158,4 @@ module.exports = angular.module('spinnaker.azure.securityGroup.azure.edit.contro
     this.cancel = function () {
       $modalInstance.dismiss();
     };
-
-    //initializeSecurityGroups();
   });
