@@ -49,23 +49,23 @@ executions {
 .execution-status-executing, .execution-status-running {
   color: @spinnaker-blue;
 }
-.execution-status-failed {
+.execution-status-terminal {
   color: @unhealthy_red;
 }
-.execution-status-completed {
+.execution-status-succeeded {
   color: @healthy_green_border;
 }
 
 .execution-marker {
   fill: @stage-default;
   background-color: @stage-default;
-  &.execution-marker-failed {
-    fill: @stage-failed;
-    background-color: @stage-failed;
+  &.execution-marker-terminal {
+    fill: @stage-terminal;
+    background-color: @stage-terminal;
   }
-  &.execution-marker-completed {
-    fill: @stage-completed;
-    background-color: @stage-completed;
+  &.execution-marker-succeeded {
+    fill: @stage-succeeded;
+    background-color: @stage-succeeded;
   }
   &.execution-marker-running {
     fill: @stage-running;

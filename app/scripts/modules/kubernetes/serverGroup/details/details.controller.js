@@ -14,11 +14,10 @@ module.exports = angular.module('spinnaker.serverGroup.details.kubernetes.contro
   require('../../../core/insight/insightFilterState.model.js'),
   require('../../../core/utils/selectOnDblClick.directive.js'),
 ])
-  .controller('kubernetesDetailsController', function ($scope, $state, app, serverGroup, InsightFilterStateModel,
-                                                       serverGroupReader, $uibModal, serverGroupWriter,
-                                                       runningExecutionsService, serverGroupWarningMessageService,
-                                                       kubernetesServerGroupCommandBuilder) {
-
+  .controller('kubernetesServerGroupDetailsController', function ($scope, $state, app, serverGroup, InsightFilterStateModel,
+                                                                  serverGroupReader, $uibModal, serverGroupWriter,
+                                                                  runningExecutionsService, serverGroupWarningMessageService,
+                                                                  kubernetesServerGroupCommandBuilder) {
     let application = app;
 
     $scope.state = {
@@ -118,6 +117,7 @@ module.exports = angular.module('spinnaker.serverGroup.details.kubernetes.contro
       $uibModal.open({
         templateUrl: require('../configure/wizard/wizard.html'),
         controller: 'kubernetesCloneServerGroupController as ctrl',
+        size: 'lg',
         resolve: {
           title: function() { return 'Clone ' + serverGroup.name; },
           application: function() { return application; },

@@ -54,6 +54,11 @@ module.exports = angular.module('spinnaker.aws.serverGroup.configure.service', [
         return command.suspendedProcesses.indexOf(process) !== -1;
       };
 
+      command.regionIsDeprecated = () => {
+        return _.has(command, 'backingData.filtered.regions') &&
+          command.backingData.filtered.regions.some((region) => region.name === command.region && region.deprecated);
+      };
+
       return $q.all({
         regionsKeyedByAccount: accountService.getRegionsKeyedByAccount('aws'),
         securityGroups: securityGroupReader.getAllSecurityGroups(),
@@ -196,15 +201,18 @@ module.exports = angular.module('spinnaker.aws.serverGroup.configure.service', [
               ami: image.amis ? image.amis[command.region][0] : null
             };
           });
-        var regionalImageMatches = regionalImages.filter((image) => image.imageName === command.amiName);
-        if (command.amiName && !regionalImageMatches.length) {
+        var [match] = regionalImages.filter((image) => image.imageName === command.amiName);
+        if (command.amiName && !match) {
           result.dirty.amiName = true;
           command.amiName = null;
         } else {
-          command.virtualizationType = regionalImages.length ? regionalImages[0].virtualizationType : null;
+          command.virtualizationType = match ? match.virtualizationType : null;
         }
       } else {
-        command.amiName = null;
+        if (command.amiName) {
+          result.dirty.amiName = true;
+          command.amiName = null;
+        }
       }
       command.backingData.filtered.images = regionalImages;
       return result;

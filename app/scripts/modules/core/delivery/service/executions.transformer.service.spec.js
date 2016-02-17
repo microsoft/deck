@@ -49,25 +49,7 @@ describe('executionTransformerService', function() {
       };
 
       this.transformer.transformExecution({}, execution);
-      expect(_.pluck(execution.stageSummaries[0].stages, 'id')).toEqual(['f', 'e', 'c', 'b', 'a', 'g', 'd', 'h']);
-    });
-
-    it('should sort sibling before stages by start time if available', function() {
-      var execution = {
-        stages: [
-          { id: 'a', name: 'a' },
-          { id: 'b', name: 'b', parentStageId: 'a', syntheticStageOwner: 'STAGE_BEFORE', startTime: 2 },
-          { id: 'c', name: 'c', parentStageId: 'a', syntheticStageOwner: 'STAGE_BEFORE', startTime: 1 },
-          { id: 'd', name: 'd', parentStageId: 'a', syntheticStageOwner: 'STAGE_AFTER' },
-          { id: 'e', name: 'e', parentStageId: 'b', syntheticStageOwner: 'STAGE_BEFORE' },
-          { id: 'f', name: 'f', parentStageId: 'b', syntheticStageOwner: 'STAGE_BEFORE', startTime: 1 },
-          { id: 'g', name: 'g', parentStageId: 'd', syntheticStageOwner: 'STAGE_BEFORE' },
-          { id: 'h', name: 'h', parentStageId: 'd', syntheticStageOwner: 'STAGE_AFTER' },
-        ]
-      };
-
-      this.transformer.transformExecution({}, execution);
-      expect(_.pluck(execution.stageSummaries[0].stages, 'id')).toEqual(['f', 'e', 'c', 'b', 'a', 'g', 'd', 'h']);
+      expect(_.pluck(execution.stageSummaries[0].stages, 'id')).toEqual(['c', 'f', 'e', 'b', 'a', 'g', 'd', 'h']);
     });
 
     it('should group stages into summaries when no synthetic stages added', function() {
@@ -108,11 +90,11 @@ describe('executionTransformerService', function() {
     it('should set summary status and start/end times based on child stages', function() {
       var execution = {
         stages: [
-          { id: '1', name: 'bake', status: 'COMPLETED', startTime: 7, endTime: 8 },
+          { id: '1', name: 'bake', status: 'SUCCEEDED', startTime: 7, endTime: 8 },
           { id: '2', name: 'deploy', status: 'RUNNING', startTime: 7 },
           { id: '3', name: 'wait', status: 'NOT_STARTED' },
-          { id: '4', parentStageId: '2', syntheticStageOwner: 'STAGE_BEFORE', status: 'COMPLETED', startTime: 4, endTime: 6},
-          { id: '5', parentStageId: '1', syntheticStageOwner: 'STAGE_BEFORE', status: 'COMPLETED', startTime: 5, endTime: 6},
+          { id: '4', parentStageId: '2', syntheticStageOwner: 'STAGE_BEFORE', status: 'SUCCEEDED', startTime: 4, endTime: 6},
+          { id: '5', parentStageId: '1', syntheticStageOwner: 'STAGE_BEFORE', status: 'SUCCEEDED', startTime: 5, endTime: 6},
           { id: '6', parentStageId: '2', syntheticStageOwner: 'STAGE_BEFORE', status: 'NOT_STARTED' },
           { id: '7', parentStageId: '3', syntheticStageOwner: 'STAGE_BEFORE', status: 'NOT_STARTED' },
           { id: '8', parentStageId: '3', syntheticStageOwner: 'STAGE_AFTER', status: 'NOT_STARTED' },
@@ -120,7 +102,7 @@ describe('executionTransformerService', function() {
       };
       this.transformer.transformExecution({}, execution);
 
-      expect(execution.stageSummaries[0].status).toBe('COMPLETED');
+      expect(execution.stageSummaries[0].status).toBe('SUCCEEDED');
       expect(execution.stageSummaries[0].startTime).toBe(5);
       expect(execution.stageSummaries[0].endTime).toBe(8);
 
@@ -136,8 +118,8 @@ describe('executionTransformerService', function() {
     it('should remove stage summary end time if current stage is still running', function () {
       var execution = {
         stages: [
-          { id: '2', name: 'deploy', status: 'COMPLETED', startTime: 7, endTime: 8 },
-          { id: '4', parentStageId: '2', syntheticStageOwner: 'STAGE_BEFORE', status: 'COMPLETED', startTime: 4, endTime: 6},
+          { id: '2', name: 'deploy', status: 'SUCCEEDED', startTime: 7, endTime: 8 },
+          { id: '4', parentStageId: '2', syntheticStageOwner: 'STAGE_BEFORE', status: 'SUCCEEDED', startTime: 4, endTime: 6},
           { id: '6', parentStageId: '2', syntheticStageOwner: 'STAGE_BEFORE', status: 'RUNNING', startTime: 6 },
         ]
       };
@@ -148,10 +130,10 @@ describe('executionTransformerService', function() {
     it('should set stage summary end time to the maximum value of all stage end times', function () {
       var execution = {
         stages: [
-          { id: '2', name: 'deploy', status: 'COMPLETED', startTime: 7, endTime: 8 },
-          { id: '4', parentStageId: '2', syntheticStageOwner: 'STAGE_BEFORE', status: 'COMPLETED', startTime: 4, endTime: 6},
-          { id: '5', parentStageId: '2', syntheticStageOwner: 'STAGE_BEFORE', status: 'COMPLETED', startTime: 4, endTime: 9},
-          { id: '6', parentStageId: '2', syntheticStageOwner: 'STAGE_AFTER', status: 'COMPLETED', startTime: 6, endTime: 11 },
+          { id: '2', name: 'deploy', status: 'SUCCEEDED', startTime: 7, endTime: 8 },
+          { id: '4', parentStageId: '2', syntheticStageOwner: 'STAGE_BEFORE', status: 'SUCCEEDED', startTime: 4, endTime: 6},
+          { id: '5', parentStageId: '2', syntheticStageOwner: 'STAGE_BEFORE', status: 'SUCCEEDED', startTime: 4, endTime: 9},
+          { id: '6', parentStageId: '2', syntheticStageOwner: 'STAGE_AFTER', status: 'SUCCEEDED', startTime: 6, endTime: 11 },
         ]
       };
       this.transformer.transformExecution({}, execution);
@@ -161,9 +143,9 @@ describe('executionTransformerService', function() {
     it('should not set stage status, start/end times based on child stages on non-summary stages', function() {
       var execution = {
         stages: [
-          { id: '1', name: 'bake', status: 'COMPLETED', startTime: 7, endTime: 8 },
-          { id: '2', parentStageId: '1', syntheticStageOwner: 'STAGE_AFTER', status: 'COMPLETED', startTime: 8, endTime: 9},
-          { id: '3', parentStageId: '2', syntheticStageOwner: 'STAGE_BEFORE', status: 'COMPLETED', startTime: 7, endTime: 8},
+          { id: '1', name: 'bake', status: 'SUCCEEDED', startTime: 7, endTime: 8 },
+          { id: '2', parentStageId: '1', syntheticStageOwner: 'STAGE_AFTER', status: 'SUCCEEDED', startTime: 8, endTime: 9},
+          { id: '3', parentStageId: '2', syntheticStageOwner: 'STAGE_BEFORE', status: 'SUCCEEDED', startTime: 7, endTime: 8},
           { id: '4', parentStageId: '2', syntheticStageOwner: 'STAGE_AFTER', status: 'RUNNING', startTime: 11 },
           { id: '5', parentStageId: '2', syntheticStageOwner: 'STAGE_AFTER', status: 'NOT_STARTED' },
         ]
@@ -184,7 +166,7 @@ describe('executionTransformerService', function() {
 
       expect(_.pluck(summary.stages, 'id')).toEqual(['1', '3', '2', '4', '5']);
       expect(nested.id).toBe('2');
-      expect(nested.status).toBe('COMPLETED');
+      expect(nested.status).toBe('SUCCEEDED');
       expect(nested.startTime).toBe(8);
       expect(nested.endTime).toBe(9);
     });
@@ -192,10 +174,10 @@ describe('executionTransformerService', function() {
     it('should add startTime to stage summary based on min of child stage start times if first stage has no start time', function () {
       var execution = {
         stages: [
-          { id: '2', name: 'deploy', status: 'COMPLETED', startTime: null, endTime: 8 },
-          { id: '4', parentStageId: '2', syntheticStageOwner: 'STAGE_BEFORE', status: 'COMPLETED', startTime: null, endTime: 6},
-          { id: '5', parentStageId: '2', syntheticStageOwner: 'STAGE_BEFORE', status: 'COMPLETED', startTime: 11, endTime: 9},
-          { id: '6', parentStageId: '2', syntheticStageOwner: 'STAGE_AFTER', status: 'COMPLETED', startTime: 4, endTime: 11 },
+          { id: '2', name: 'deploy', status: 'SUCCEEDED', startTime: null, endTime: 8 },
+          { id: '4', parentStageId: '2', syntheticStageOwner: 'STAGE_BEFORE', status: 'SUCCEEDED', startTime: null, endTime: 6},
+          { id: '5', parentStageId: '2', syntheticStageOwner: 'STAGE_BEFORE', status: 'SUCCEEDED', startTime: 11, endTime: 9},
+          { id: '6', parentStageId: '2', syntheticStageOwner: 'STAGE_AFTER', status: 'SUCCEEDED', startTime: 4, endTime: 11 },
         ]
       };
       this.transformer.transformExecution({}, execution);

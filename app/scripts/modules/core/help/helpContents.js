@@ -262,6 +262,7 @@ module.exports = angular.module('spinnaker.core.help.contents', [])
       'and passed to Docker as the --memory flag. Otherwise there are no restrictions on memory usage',
     'kubernetes.containers.requests.memory': '(Optional) This is used for scheduling. It assures that this container will always be scheduled on a machine ' +
       'with at least this much memory available.',
+    'kubernetes.namespace': 'The namespace you have configured with the above selected account. This will often be referred to as "Region" in Spinnaker.',
     'user.verification': 'Typing into this verification field is annoying! But it serves as a reminder that you are ' +
     'changing something in an account deemed important, and prevents you from accidentally changing something ' +
     'when you meant to click on the "Cancel" button.',
@@ -273,4 +274,5 @@ module.exports = angular.module('spinnaker.core.help.contents', [])
     'azure.securityGroup.ingress.destinationPortRange': 'The destination port range can be a single port, such as 80, or a port range, such as 1024-65535.  This specifies from which destination ports traffic will be allowed or denied by this rule.  Provide an asterisk (*) to allow traffic from clients connecting from any port.',
     'azure.securityGroup.ingress.direction': 'Specifies whether the rule is for inbound or outbound traffic.',
     'azure.securityGroup.ingress.actions': 'To adjust the priority of a rule, move it up or down in the list of rules.  Rules at the top of the list have the highest priority.',
+    'azure.serverGroup.imageName': '(Required) <b>Image</b> is the deployable Azure Machine Image.',
   });
