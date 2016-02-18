@@ -97,8 +97,8 @@ module.exports = angular.module('spinnaker.azure.securityGroup.azure.edit.contro
     }
 
     function onTaskComplete() {
-      application.refreshImmediately();
-      application.registerOneTimeRefreshHandler(onApplicationRefresh);
+      application.securityGroups.refresh();
+      application.securityGroups.onNextRefresh($scope, onApplicationRefresh);
     }
 
     this.portUpdated = function(ruleset, index)
