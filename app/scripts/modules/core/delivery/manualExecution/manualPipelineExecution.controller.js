@@ -56,7 +56,7 @@ module.exports = angular.module('spinnaker.core.delivery.manualPipelineExecution
 
     this.pipelineSelected = () => {
       let pipeline = this.command.pipeline,
-          executions = application.executions || [];
+          executions = application.executions.data || [];
       this.currentlyRunningExecutions = executions
         .filter((execution) => execution.pipelineConfigId === pipeline.id && execution.isActive);
       addTriggers();
@@ -102,7 +102,7 @@ module.exports = angular.module('spinnaker.core.delivery.manualPipelineExecution
     }
 
     if (!pipeline) {
-      this.pipelineOptions = application.pipelineConfigs;
+      this.pipelineOptions = application.pipelineConfigs.data;
     }
 
   });

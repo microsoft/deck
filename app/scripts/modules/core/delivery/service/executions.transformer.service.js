@@ -13,7 +13,10 @@ module.exports = angular.module('spinnaker.core.delivery.executionTransformer.se
 
     var hiddenStageTypes = ['pipelineInitialization', 'waitForRequisiteCompletion'];
 
+    //let totalTime = 0.0;
+
     function transformExecution(application, execution) {
+      //let start = window.performance.now();
       if (execution.trigger) {
         execution.isStrategy = execution.trigger.isPipeline === false && execution.trigger.type === 'pipeline';
       }
@@ -30,7 +33,7 @@ module.exports = angular.module('spinnaker.core.delivery.executionTransformer.se
         stage.index = index;
         orchestratedItemTransformer.defineProperties(stage);
         if (stage.tasks && stage.tasks.length) {
-          stage.tasks.forEach(orchestratedItemTransformer.defineProperties);
+          stage.tasks.forEach(orchestratedItemTransformer.addRunningTime);
         }
       });
 
@@ -77,6 +80,9 @@ module.exports = angular.module('spinnaker.core.delivery.executionTransformer.se
       execution.currentStages = getCurrentStages(execution);
       addStageWidths(execution);
       addBuildInfo(execution);
+      //let end = window.performance.now();
+      //totalTime += (end-start);
+      //console.warn('tt:', totalTime, '(this)', (end-start));
     }
 
     function siblingStageSorter(a, b) {
@@ -158,7 +164,7 @@ module.exports = angular.module('spinnaker.core.delivery.executionTransformer.se
         setMasterStageStartTime(stages, stage);
         var lastNotStartedStage = _(stages).findLast(
           function (childStage) {
-            return !childStage.hasNotStarted;
+            return childStage.hasNotStarted;
           }
         );
 
@@ -174,7 +180,13 @@ module.exports = angular.module('spinnaker.core.delivery.executionTransformer.se
           }
         );
 
-        var currentStage = lastRunningStage || lastFailedStage || lastNotStartedStage || lastStage;
+        var lastCanceledStage = _(stages).findLast(
+          function (childStage) {
+            return childStage.isCanceled;
+          }
+        );
+
+        var currentStage = lastRunningStage || lastFailedStage || lastCanceledStage || lastNotStartedStage || lastStage;
         stage.status = currentStage.status;
         // if a stage is running, ignore the endTime of the parent stage
         if (!currentStage.endTime) {
