@@ -9,6 +9,7 @@ module.exports = angular.module('spinnaker.azure.serverGroup.configure.basicSett
   require('../../../../../core/modal/wizard/v2modalWizard.service.js'),
   require('../../../../../core/image/image.reader.js'),
   require('../../../../../core/naming/naming.service.js'),
+  require('../../../../../core/utils/lodash.js'),
 ])
   .controller('azureServerGroupBasicSettingsCtrl', function($scope, $controller, $uibModalStack, $state,
                                                           v2modalWizardService, imageReader, namingService) {
@@ -34,4 +35,11 @@ module.exports = angular.module('spinnaker.azure.serverGroup.configure.basicSett
       $uibModalStack: $uibModalStack,
       $state: $state,
     }));
-  });
+  }).filter('regional', function(_) {
+  return function(input, selectedRegion) {
+    var result = _.filter(input, function(image) {
+      return image.region === selectedRegion || image.region == null;
+    });
+    return result;
+  };
+});
