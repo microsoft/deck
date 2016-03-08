@@ -5,6 +5,7 @@ let angular = require('angular');
 module.exports = angular.module('spinnaker.azure.serverGroup.configure.basicSettings', [
   require('angular-ui-router'),
   require('angular-ui-bootstrap'),
+  require('./image.regional.filter.js'),
   require('../../../../../core/serverGroup/configure/common/basicSettingsMixin.controller.js'),
   require('../../../../../core/modal/wizard/v2modalWizard.service.js'),
   require('../../../../../core/image/image.reader.js'),
@@ -35,11 +36,4 @@ module.exports = angular.module('spinnaker.azure.serverGroup.configure.basicSett
       $uibModalStack: $uibModalStack,
       $state: $state,
     }));
-  }).filter('regional', function(_) {
-  return function(input, selectedRegion) {
-    var result = _.filter(input, function(image) {
-      return image.region === selectedRegion || image.region == null;
-    });
-    return result;
-  };
-});
+  });

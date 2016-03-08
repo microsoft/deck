@@ -1,10 +1,10 @@
 'use strict';
 
-describe('Controller: azureServerGroupBasicSettingsCtrl', function () {
+describe('Filter: regional', function () {
 
   beforeEach(
     window.module(
-      require('./ServerGroupBasicSettings.controller.js')
+      require('./image.regional.filter.js')
       )
     );
 
