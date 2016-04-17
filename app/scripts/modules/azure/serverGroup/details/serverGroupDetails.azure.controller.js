@@ -11,12 +11,12 @@ module.exports = angular.module('spinnaker.azure.serverGroup.details.controller'
   require('../../../core/serverGroup/serverGroup.read.service.js'),
   require('../../../core/utils/selectOnDblClick.directive.js'),
   require('../../../core/confirmationModal/confirmationModal.service.js'),
-  require('../serverGroup.write.service.js'),
+  require('../../../core/serverGroup/serverGroup.write.service.js'),
   require('../../../core/utils/lodash.js'),
   require('../../../core/insight/insightFilterState.model.js'),
 ])
   .controller('azureServerGroupDetailsCtrl', function ($scope, $state, $templateCache, $compile, app, serverGroup, InsightFilterStateModel,
-                                                     serverGroupReader, azureServerGroupCommandBuilder, $uibModal, confirmationModalService, _, azureServerGroupWriter) {
+                                                     serverGroupReader, azureServerGroupCommandBuilder, $uibModal, confirmationModalService, _, serverGroupWriter) {
 
     $scope.state = {
       loading: true
@@ -105,7 +105,7 @@ module.exports = angular.module('spinnaker.azure.serverGroup.details.controller'
       };
 
       var submitMethod = function () {
-        return azureServerGroupWriter.destroyServerGroup(serverGroup, app);
+        return serverGroupWriter.destroyServerGroup(serverGroup, app);
       };
 
       var stateParams = {
@@ -161,7 +161,7 @@ module.exports = angular.module('spinnaker.azure.serverGroup.details.controller'
       };
 
       var submitMethod = function () {
-        return azureServerGroupWriter.disableServerGroup(serverGroup, app);
+        return serverGroupWriter.disableServerGroup(serverGroup, app);
       };
 
       confirmationModalService.confirm({
@@ -184,7 +184,7 @@ module.exports = angular.module('spinnaker.azure.serverGroup.details.controller'
       };
 
       var submitMethod = function () {
-        return azureServerGroupWriter.enableServerGroup(serverGroup, app);
+        return serverGroupWriter.enableServerGroup(serverGroup, app);
       };
 
       confirmationModalService.confirm({
