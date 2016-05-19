@@ -93,7 +93,7 @@ module.exports = angular
       var securityGroup = $scope.securityGroup,
         name = application.name;
       if (securityGroup.detail) {
-        name += '-' + securityGroup.detail.replace(/ /g, '-');
+        name += '-' + securityGroup.detail;
       }
       securityGroup.name = name;
       $scope.namePreview = name;
