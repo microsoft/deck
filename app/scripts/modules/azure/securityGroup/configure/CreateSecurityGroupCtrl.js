@@ -9,7 +9,7 @@ module.exports = angular
     require('../securityGroup.write.service.js'),
     require('../../../core/region/regionSelectField.directive.js'),
     require('../../../core/account/account.service.js'),
-    require('../../../core/modal/wizard/modalWizard.service.js'),
+    require('../../../core/modal/wizard/v2modalWizard.service.js'),
     require('../../../core/utils/lodash.js'),
     require('../../../core/securityGroup/securityGroup.read.service.js'),
     require('../../../core/cache/infrastructureCaches.js'),
