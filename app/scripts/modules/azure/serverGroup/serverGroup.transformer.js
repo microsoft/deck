@@ -57,10 +57,6 @@ module.exports = angular.module('spinnaker.azure.serverGroup.transformer', [
           capacity: command.sku.capacity,
         },
         viewState: command.viewState,
-        osConfig: {
-          adminUserName: 'spinnakeruser',
-          adminPassword: '!Qnti**234',
-        },
       };
 
       if (typeof command.stack !== 'undefined') {
