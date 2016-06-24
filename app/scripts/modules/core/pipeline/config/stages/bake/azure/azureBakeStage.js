@@ -71,7 +71,10 @@ module.exports = angular.module('spinnaker.core.pipeline.stage.azure.bakeStage',
         if (!$scope.stage.baseOs && $scope.baseOsOptions && $scope.baseOsOptions.length) {
           $scope.stage.baseOs = $scope.baseOsOptions[0].id;
         }
-
+        if ($scope.stage.baseOs === "windows") {  
+          $scope.stage.osType = "Windows";
+        } 
+        
         if (!$scope.stage.baseLabel && $scope.baseLabelOptions && $scope.baseLabelOptions.length) {
           $scope.stage.baseLabel = $scope.baseLabelOptions[0];
         }
