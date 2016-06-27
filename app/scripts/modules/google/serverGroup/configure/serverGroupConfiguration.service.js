@@ -11,7 +11,7 @@ module.exports = angular.module('spinnaker.serverGroup.configure.gce.configurati
   require('../../../core/subnet/subnet.read.service.js'),
   require('../../image/image.reader.js'),
   require('../../instance/gceInstanceType.service.js'),
-  require('./wizard/customInstance/customInstanceBuilder.gce.service.js'),
+  require('./../../instance/custom/customInstanceBuilder.gce.service.js'),
 ])
   .factory('gceServerGroupConfigurationService', function(gceImageReader, accountService, securityGroupReader,
                                                           gceInstanceTypeService, cacheInitializer,
@@ -145,7 +145,8 @@ module.exports = angular.module('spinnaker.serverGroup.configure.gce.configurati
 
     function configureStandardInstanceTypes(command) {
       let result = { dirty: {} };
-      let filtered = gceInstanceTypeService.getAvailableTypesForRegions(command.backingData.instanceTypes, [command.region]);
+      let locations = command.regional ? [ command.region ] : [ command.zone ];
+      let filtered = gceInstanceTypeService.getAvailableTypesForLocations(command.backingData.instanceTypes, locations);
       filtered = sortInstanceTypes(filtered);
       let instanceType = command.instanceType;
       if (_.every([ instanceType, !_.startsWith(instanceType, 'custom'), !_.contains(filtered, instanceType) ])) {
@@ -511,7 +512,7 @@ module.exports = angular.module('spinnaker.serverGroup.configure.gce.configurati
         }
         command.viewState.dirty = command.viewState.dirty || {};
         angular.extend(command.viewState.dirty, result.dirty);
-        angular.extend(command.viewState.dirty, configureCustomInstanceTypes(command).dirty);
+        angular.extend(command.viewState.dirty, configureInstanceTypes(command).dirty);
         return result;
       };
 
