@@ -20,12 +20,11 @@ module.exports = angular.module('spinnaker.azure.cloneServerGroup.controller', [
       basicSettings: require('./basicSettings/basicSettings.html'),
       loadBalancers: require('./loadBalancers/loadBalancers.html'),
       networkSettings: require('./networkSettings/networkSettings.html'),
-      capacity: require('./capacity/capacity.html'),
+      /*capacity: require('./capacity/capacity.html'),*/
       securityGroups: require('./securityGroup/securityGroups.html'),
 /*      instanceArchetype: require('./instanceArchetype.html'),
-      instanceType: require('./instanceType.html'),
-      advancedSettings: require('./advancedSettings.html'),
-      */
+      instanceType: require('./instanceType.html'), */
+      advancedSettings: require('./advancedSettings/advancedSettings.html'),
     };
 
     $scope.title = title;

@@ -63,6 +63,11 @@ module.exports = angular.module('spinnaker.azure.serverGroup.transformer', [
         osConfig: {
           adminUserName: 'spinnakeruser',
           adminPassword: '!Qnti**234',
+          customData: command.osConfig.customData,
+        },
+        customScriptSettings: {
+          commandToExecute: command.commandToExecute,
+          fileURIs: command.customScriptsLocations,
         },
       };
 

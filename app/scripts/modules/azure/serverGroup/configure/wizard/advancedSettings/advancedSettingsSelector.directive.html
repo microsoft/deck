@@ -9,9 +9,30 @@
                                  required/></div>
   </div>
   <div class="form-group">
-    <div class="col-md-3 sm-label-right">Custom Data</div>
-    <div class="col-md-2"><input type="text"
-                                 class="form-control input-sm"
-                                 ng-model="adv.command.customData"/></div>
+    <div class="col-md-3 sm-label-right">
+      <b>Custom Data</b>
+      <help-field key=""/>
+    </div>
+    <div class="col-md-8"><input type="text"
+                                  class="form-control input-sm"
+                                  ng-model="adv.command.osConfig.customData"/></div>
+    <div>
+      <div class="col-md-3 sm-label-right">
+        <b>Script Location</b>
+        <help-field key=""/>      
+      </div>
+      <div class="col-md-8">
+        <input type="text" class="form-control input-sm" ng-model="adv.command.customScriptsLocations"/>      
+      </div>
+    </div>
+    <div>
+      <div class="col-md-3 sm-label-right">
+        <b>Command To Execute</b>
+        <help-field key=""/>
+      </div>
+      <div class="col-md-8">
+        <input type="text" class="form-control input-sm" ng-model="adv.command.commandToExecute"/>
+      </div>
+    </div>
   </div>
 </div>
