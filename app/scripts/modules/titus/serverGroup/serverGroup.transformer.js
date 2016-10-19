@@ -19,27 +19,6 @@ module.exports = angular
         delete command.source;
       }
       command.account = command.credentials;
-      if (command.securityGroups) {
-        var securityGroups = '' + command.securityGroups;
-        command.securityGroups = securityGroups.split(/\s*,\s*/);
-      }
-      if (command.securityGroups === '') {
-        delete command.securityGroups;
-      }
-      if (command.softConstraints) {
-        var softConstraints = '' + command.softConstraints;
-        command.softConstraints = softConstraints.split(/\s*,\s*/);
-      }
-      if (command.softConstraints === '') {
-        delete command.softConstraints;
-      }
-      if (command.hardConstraints) {
-        var hardConstraints = '' + command.hardConstraints;
-        command.hardConstraints = hardConstraints.split(/\s*,\s*/);
-      }
-      if (command.hardConstraints === '') {
-        delete command.hardConstraints;
-      }
       if (command.resources.allocateIpAddress === true) {
         delete command.resources.ports;
       }

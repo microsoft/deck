@@ -1,5 +1,7 @@
 'use strict';
 
+import {AUTHENTICATION} from 'core/authentication/authentication.module';
+import {API_SERVICE} from 'core/api/api.service';
 
 global.Spinner = require('spin.js');
 
@@ -44,11 +46,11 @@ module.exports = angular
 
     require('./account/accountLabelColor.directive.js'),
     require('./analytics/analytics.service'),
-    require('./authentication/authentication.module.js'),
+    AUTHENTICATION,
 
     require('./bootstrap/applicationBootstrap.directive.js'),
 
-    require('./api/api.service'),
+    API_SERVICE,
 
     require('./cache/caches.module.js'),
     require('./cloudProvider/cloudProviderLogo.directive.js'),
@@ -97,7 +99,6 @@ module.exports = angular
     require('./pipeline/config/stages/core/stage.core.module.js'),
     require('./pipeline/config/stages/deploy/deployStage.module.js'),
     require('./pipeline/config/stages/destroyAsg/destroyAsgStage.module.js'),
-    require('./pipeline/config/stages/determineTargetReference/determineTargetReference.module.js'),
     require('./pipeline/config/stages/disableAsg/disableAsgStage.module.js'),
     require('./pipeline/config/stages/disableCluster/disableClusterStage.module.js'),
     require('./pipeline/config/stages/enableAsg/enableAsgStage.module.js'),

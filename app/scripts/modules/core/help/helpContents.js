@@ -445,6 +445,9 @@ module.exports = angular.module('spinnaker.core.help.contents', [])
     'azure.serverGroup.imageName': '(Required) <b>Image</b> is the deployable Azure Machine Image.',
     'azure.serverGroup.stack': '(Required) <b>Stack</b> is one of the core naming components of a cluster, used to create vertical stacks of dependent services for integration testing.',
     'azure.serverGroup.detail': '(Required) <b>Detail</b> is a naming component to help distinguish specifics of the server group.',
+    'azure.serverGroup.scriptLocation': 'The location of single custom script to be downloaded on to each instance.',
+    'azure.serverGroup.commandToExecute': 'Command(s) to execute custom script provided during provisioning of an instance.',
+    'azure.serverGroup.customData': 'Script or metadata to be injected into each instances.',
     'openstack.loadBalancer.detail': '(Optional) A string of free-form alphanumeric characters; by convention, we recommend using "frontend".',
     'openstack.loadBalancer.stack': '(Optional) One of the core naming components of a cluster, used to create vertical stacks of dependent services for integration testing.' ,
     'openstack.loadBalancer.subnet': 'The subnet where the instances for this load balancer reside.',
@@ -457,6 +460,8 @@ module.exports = angular.module('spinnaker.core.help.contents', [])
     'openstack.loadBalancer.healthCheck.delay': '<p>The interval, in seconds, between health checks.</p><p>Default: <b>10</b></p>',
     'openstack.loadBalancer.healthCheck.maxRetries': '<p>The number of retries before declaring an instance as failed and removing it from the pool.</p><p>Default: <b>2</b></p>',
     'openstack.loadBalancer.healthCheck.statusCodes': 'A list of HTTP status codes that will be considered a successful response.',
+    'openstack.network.floatingip': '<p>Whether or not each instance in the server group should be assigned a floating ip.</p><p>Default: <b>No</b></p>',
+    'openstack.network.floatpool': 'The network from which to allocate a floating ip',
     'openstack.serverGroup.userData': '<p>Provides a script that will run when each server group instance starts.</p>',
     'openstack.serverGroup.tags': '<p>Key-value pairs of metadata that will be associate to each server group instance.</p>',
   });
