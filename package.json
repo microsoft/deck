@@ -48,7 +48,7 @@
     "font-awesome": "^4.7.0",
     "jquery": "2.1.4",
     "jquery-textcomplete": "1.6.1",
-    "jquery-ui": "~1.10.5",
+    "jquery-ui": "~1.13.0",
     "lodash": "^4.16.1",
     "moment-timezone": "^0.4.0",
     "n3-charts": "^2.0.18",
