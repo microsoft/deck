@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "Select2": "git://github.com/select2/select2.git#3.4.8",
-    "angular": "1.6.3",
+    "angular": "1.8.3",
     "angular-cache": "^4.6.0",
     "angular-cron-gen": "0.0.21",
     "angular-filter": "^0.5.15",
@@ -67,7 +67,7 @@
     "ui-select": "^0.19.6"
   },
   "devDependencies": {
-    "@types/angular": "1.6.10",
+    "@types/angular": "1.8.4",
     "@types/angular-mocks": "1.5.9",
     "@types/angular-ui-bootstrap": "^0.13.41",
     "@types/angular-ui-router": "^1.1.35",

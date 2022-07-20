@@ -20,11 +20,9 @@
   dependencies:
     "@types/angular" "*"
 
-"@types/angular@*", "@types/angular@1.6.10", "@types/angular@^1.6.7", "@types/angular@^1.6.9":
-  version "1.6.10"
-  resolved "https://registry.yarnpkg.com/@types/angular/-/angular-1.6.10.tgz#1c6a458305c85b16c98fe5173b843a836dbc2b67"
-  dependencies:
-    "@types/jquery" "*"
+"@types/angular@*", "@types/angular@1.8.4", "@types/angular@^1.6.7", "@types/angular@^1.6.9":
+  version "1.8.4"
+  resolved "https://registry.yarnpkg.com/@types/angular/-/angular-1.8.4.tgz#a2cc163e508389c51d4c4119ebff6b9395cec472"
 
 "@types/clipboard@^1.5.33":
   version "1.5.33"
@@ -214,7 +212,7 @@
   version "2.5.42"
   resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-2.5.42.tgz#60ed723d08d2ddd277333ebe1e39761b46fdb755"
 
-"@types/jquery@*", "@types/jquery@^2.0.34":
+"@types/jquery@^2.0.34":
   version "2.0.41"
   resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-2.0.41.tgz#b87ba051011f99edbe586d8f97282e7786e01a6d"
 
@@ -471,9 +469,9 @@ angular-ui-sortable@^0.17.0:
     react "^15.4.2"
     react-dom "^15.4.2"
 
-angular@*, angular@1.6.3, angular@^1.0.8, angular@^1.4.0, angular@^1.6.2, angular@^1.6.3:
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/angular/-/angular-1.6.3.tgz#5d34b799234e8fa17c6a3a14e0258733935f43e7"
+angular@*, angular@1.8.3, angular@^1.0.8, angular@^1.4.0, angular@^1.6.2, angular@^1.6.3:
+  version "1.8.3"
+  resolved "https://registry.yarnpkg.com/angular/-/angular-1.8.3.tgz#851ad75d5163c105a7e329555ef70c90aa706894"
 
 angulartics-google-analytics@^0.2.0:
   version "0.2.1"
