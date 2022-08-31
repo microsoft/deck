@@ -50,7 +50,7 @@
     "jquery-textcomplete": "1.6.1",
     "jquery-ui": "~1.10.5",
     "lodash": "^4.16.1",
-    "moment-timezone": "^0.4.0",
+    "moment-timezone": "^0.5.35",
     "n3-charts": "^2.0.18",
     "ngimport": "^0.6.0",
     "react": "~15.4.2",
