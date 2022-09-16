@@ -40,7 +40,7 @@
     "angular-ui-router": "0.4.2",
     "angular-ui-sortable": "^0.17.0",
     "angular2react": "git://github.com/jrsquared/angular2react.git",
-    "bootstrap": "3.3.7",
+    "bootstrap": "3.4.1",
     "clipboard": "^1.5.12",
     "d3-scale": "^1.0.4",
     "d3-shape": "^1.0.4",
