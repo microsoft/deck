@@ -46,7 +46,7 @@
     "d3-shape": "^1.0.4",
     "diff-match-patch": "^1.0.0",
     "font-awesome": "^4.7.0",
-    "jquery": "2.1.4",
+    "jquery": "3.5.0",
     "jquery-textcomplete": "1.6.1",
     "jquery-ui": "~1.10.5",
     "lodash": "^4.16.1",
