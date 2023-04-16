@@ -49,7 +49,7 @@
     "jquery": "2.1.4",
     "jquery-textcomplete": "1.6.1",
     "jquery-ui": "~1.10.5",
-    "lodash": "^4.16.1",
+    "lodash": "^4.17.21",
     "moment-timezone": "^0.4.0",
     "n3-charts": "^2.0.18",
     "ngimport": "^0.6.0",
